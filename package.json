@@ -1,6 +1,6 @@
 {
   "name": "loopback-bluemix",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Utilities for generating generate Bluemix artefacts",
   "main": "index.js",
   "scripts": {
