@@ -18,6 +18,7 @@
   "homepage": "https://github.com/strongloop/loopback-bluemix#readme",
   "dependencies": {
     "insert-line": "^1.1.0",
+    "jsonfile-updater": "^2.1.0",
     "request": "^2.81.0"
   }
 }
