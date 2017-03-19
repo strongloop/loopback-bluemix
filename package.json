@@ -1,0 +1,22 @@
+{
+  "name": "loopback-bluemix",
+  "version": "0.0.1",
+  "description": "Utilities for generating generate Bluemix artefacts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strongloop/loopback-bluemix.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/strongloop/loopback-bluemix/issues"
+  },
+  "homepage": "https://github.com/strongloop/loopback-bluemix#readme",
+  "dependencies": {
+    "request": "^2.81.0"
+  }
+}
