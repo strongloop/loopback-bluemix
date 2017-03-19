@@ -2,6 +2,6 @@
 
 Utilities for generating generate Bluemix artefacts
 
-# LICENSE
+## LICENSE
 
 [LICENSE](LICENSE)
