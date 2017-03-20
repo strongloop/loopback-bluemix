@@ -3,8 +3,12 @@
   "version": "0.0.8",
   "description": "Utilities for generating generate Bluemix artefacts",
   "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "eslint ./",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
@@ -22,5 +26,9 @@
     "insert-line": "^1.1.0",
     "jsonfile-updater": "^2.1.0",
     "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-loopback": "^8.0.0"
   }
 }
