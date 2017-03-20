@@ -9,7 +9,7 @@ var generateBluemixFiles = require(path.resolve(__dirname, 'lib', 'files.js'));
 var loopbackBluemix = {
   cf: cf,
   addDefaultServices: addDefaultServices,
-  generateBluemixFiles: generateBluemixFiles
-}
+  generateBluemixFiles: generateBluemixFiles,
+};
 
 module.exports = loopbackBluemix;
