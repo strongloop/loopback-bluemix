@@ -15,6 +15,7 @@ var loopbackBluemix = {
   cf: cf,
   addDefaultServices: addDefaultServices,
   generateBluemixFiles: generateBluemixFiles,
+  templatesDir: path.resolve(__dirname, 'templates'),
 };
 
 module.exports = loopbackBluemix;
