@@ -130,11 +130,3 @@ describe('lib/files', function() {
     });
   });
 });
-
-function copyFile(src, dest) {
-
-}
-
-function copyDir(src, dest) {
-
-}
