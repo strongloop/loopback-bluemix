@@ -41,7 +41,7 @@ describe('lib/files', function() {
     fs.removeSync(sandboxDir);
   });
 
-  it('should generate Bluemix files', function(done) {
+  it('should generate Bluemix files', function() {
     var options = {
       destDir: sandboxDir,
       bluemixCommand: 'bluemix',
@@ -55,7 +55,6 @@ describe('lib/files', function() {
       filePath = sandboxDir + '/' + filePath;
       assert(fs.existsSync(filePath));
     });
-    done();
   });
 
   it('should generate only Docker files', function() {
