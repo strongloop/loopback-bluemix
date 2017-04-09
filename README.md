@@ -4,4 +4,4 @@ Utilities for generating generate Bluemix artefacts
 
 ## LICENSE
 
-[LICENSE](LICENSE)
+[MIT](LICENSE)
