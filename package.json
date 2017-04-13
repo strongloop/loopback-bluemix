@@ -33,6 +33,7 @@
     "eslint": "^3.18.0",
     "eslint-config-loopback": "^8.0.0",
     "fs-extra": "^2.1.2",
-    "loopback-workspace": "^3.40.1"
+    "loopback-workspace": "^3.40.1",
+    "mocha": "^3.2.0"
   }
 }
