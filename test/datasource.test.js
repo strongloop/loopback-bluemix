@@ -64,7 +64,7 @@ var globalize = {
   },
 };
 
-describe('lib/datasource.js', function() {
+describe('lib/datasource', function() {
   beforeEach(function() {
     fs.ensureDirSync(sandboxDir);
     fs.emptyDirSync(sandboxDir);
