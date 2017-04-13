@@ -6,7 +6,6 @@
 /* global describe, beforeEach, it */
 'use strict';
 
-// PREREQUISITE: provisioned Cloudant service named "cloudant-service"
 // NOTE: service provisioning tests are not yet included
 
 var fs = require('fs-extra');
