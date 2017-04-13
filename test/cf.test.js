@@ -23,6 +23,7 @@ var accessToken = cf.getCfConfig().accessToken;
 describe('lib/cf', function() {
   it('should get apps', function(done) {
     cf.getApps(accessToken, function(err, apps) {
+      assert(!err);
       var appFound = false;
       apps.forEach(function(app) {
         if (cfTestConfig.app.name === app.entity.name) {
@@ -36,6 +37,7 @@ describe('lib/cf', function() {
 
   it('should get service instances', function(done) {
     cf.getServiceInstances(undefined, accessToken, function(err, services) {
+      assert(!err);
       var state = getServiceState(services);
       assert(state.supportedServiceFound);
       assert(state.unsupportedServiceFound);
@@ -46,6 +48,7 @@ describe('lib/cf', function() {
 
   it('should get only data service instances', function(done) {
     cf.getDataServiceInstances(undefined, accessToken, function(err, services) {
+      assert(!err);
       var state = getServiceState(services);
       assert(state.supportedServiceFound);
       assert(state.unsupportedServiceFound);
