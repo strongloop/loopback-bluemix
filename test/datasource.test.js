@@ -14,10 +14,11 @@ var assert = require('assert');
 var lbBM = require(path.resolve(__dirname, '..'));
 var sandboxDir = path.resolve(__dirname, 'sandbox');
 var fixturesDir = path.resolve(__dirname, 'fixtures');
-var srcDatasourcesConfigFilePath = path.resolve(fixturesDir,
-                                        'datasources-config.json');
+var bluemixTemplatesDir = path.resolve(__dirname, '..', 'templates', 'bluemix');
+var srcDatasourcesConfigFilePath = path.resolve(bluemixTemplatesDir,
+                                  'bluemix', 'datasources-config.json');
 var destDatasourcesConfigFilePath = path.resolve(sandboxDir, '.bluemix',
-                                        'datasources-config.json');
+                                  'datasources-config.json');
 // mock datasource instance
 var datasource = {
   listOfAvailableConnectors: [{name: 'In-memory db (supported by StrongLoop)',
