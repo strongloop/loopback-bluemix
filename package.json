@@ -1,13 +1,13 @@
 {
   "name": "loopback-bluemix",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "Utilities for generating generate Bluemix artefacts",
   "main": "index.js",
   "engines": {
     "node": ">=4"
   },
   "scripts": {
-    "pretest": "eslint ./",
+    "posttest": "npm run lint",
     "lint": "eslint .",
     "test": "mocha"
   },
