@@ -78,50 +78,63 @@ describe('lib/datasource', function() {
   });
 
   it('should configure a Bluemix datasource selection', function(done) {
-    datasource.async = function() { return done; };
+    datasource.async = function() {
+      return function() {
+        assert('cloudant-service' === datasource.name);
+        assert('cloudant' === datasource.connector);
+        assert('serviceGUID' in datasource);
+        done();
+      };
+    };
+    datasource.log = console.log;
     datasource.prompt = generatePrompt({
-      serviceName: 'cloudant-service (cloudantNoSQLDB)',
+      serviceName: 'cloudant-service',
     });
-    lbBM.ds.selectBluemixDatasource(datasource, globalize, function() {
-      assert('cloudant-service' === datasource.name);
-      assert('cloudant' === datasource.connector);
-      assert('serviceGUID' in datasource);
-    });
+    lbBM.ds.selectBluemixDatasource(datasource, globalize);
   });
 
   it('should configure new service provision', function(done) {
-    datasource.async = function() { return done; };
+    datasource.async = function() {
+      return function() {
+        assert('cloudanto' === datasource.serviceName);
+        assert('cloudantNoSQLDB' === datasource.serviceType);
+        done();
+      };
+    };
     datasource.prompt = generatePrompt({
       serviceName: 'cloudanto',
       serviceType: 'cloudantNoSQLDB',
     });
-    lbBM.ds.promptServiceName(datasource, globalize, function() {
-      assert('cloudanto' === datasource.serviceName);
-      assert('cloudantNoSQLDB' === datasource.serviceType);
-    });
+    lbBM.ds.promptServiceName(datasource, globalize);
   });
 
   it('should get service plans', function(done) {
-    datasource.async = function() { return done; };
-    lbBM.ds.getServicePlans(datasource, function() {
-      assert('cloudantNoSQLDB' in datasource.dataServices);
-    });
+    datasource.async = function() {
+      return function() {
+        assert('cloudantNoSQLDB' in datasource.dataServices);
+        done();
+      };
+    };
+    lbBM.ds.getServicePlans(datasource);
   });
 
   it('should update datasources-config.json', function(done) {
-    datasource.async = function() { return done; };
+    datasource.async = function() {
+      return function(err) {
+        assert(!err);
+        var dsConfigContent = fs.readFileSync(destDatasourcesConfigFilePath, 'utf8');
+        var datasourcesConfig = JSON.parse(dsConfigContent);
+        assert('dsA' in datasourcesConfig.datasources);
+        assert('dsA' === datasourcesConfig.datasources['dsA'].name);
+        assert('cA' === datasourcesConfig.datasources['dsA'].connector);
+        done();
+      };
+    };
     var options = {
       name: 'dsA',
       connector: 'cA',
     };
-    lbBM.ds.addDatasource(datasource, options, function(err) {
-      assert(!err);
-      var dsConfigContent = fs.readFileSync(destDatasourcesConfigFilePath, 'utf8');
-      var datasourcesConfig = JSON.parse(dsConfigContent);
-      assert('dsA' in datasourcesConfig.datasources);
-      assert('dsA' === datasourcesConfig.datasources['dsA'].name);
-      assert('cA' === datasourcesConfig.datasources['dsA'].connector);
-    });
+    lbBM.ds.addDatasource(datasource, options);
   });
 });
 
