@@ -59,9 +59,7 @@ var datasource = {
 };
 
 var globalize = {
-  f: function(str) {
-    console.log(str);
-  },
+  f: console.log,
 };
 
 describe('lib/datasource', function() {
