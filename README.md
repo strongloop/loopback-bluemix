@@ -10,7 +10,7 @@ npm install loopback-bluemix
 
 ## API
 
-`loopback-bluemix` exports the following property and methods.
+`loopback-bluemix` exports the following properties and methods.
 
 ### Properties
 
