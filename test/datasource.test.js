@@ -12,6 +12,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var assert = require('assert');
 var lbBM = require(path.resolve(__dirname, '..'));
+var cfConfig = lbBM.cf.getCfConfig();
 var sandboxDir = path.resolve(__dirname, 'sandbox');
 var fixturesDir = path.resolve(__dirname, 'fixtures');
 var bluemixTemplatesDir = path.resolve(__dirname, '..', 'templates', 'bluemix');
@@ -75,21 +76,23 @@ describe('lib/datasource', function() {
     fs.removeSync(sandboxDir);
   });
 
-  it('should configure a Bluemix datasource selection', function(done) {
-    datasource.async = function() {
-      return function() {
-        assert('cloudant-service' === datasource.name);
-        assert('cloudant' === datasource.connector);
-        assert('serviceGUID' in datasource);
-        done();
+  if (Object.keys(cfConfig).length) {
+    it('should configure a Bluemix datasource selection', function(done) {
+      datasource.async = function() {
+        return function() {
+          assert('cloudant-service' === datasource.name);
+          assert('cloudant' === datasource.connector);
+          assert('serviceGUID' in datasource);
+          done();
+        };
       };
-    };
-    datasource.log = console.log;
-    datasource.prompt = generatePrompt({
-      serviceName: 'cloudant-service',
+      datasource.log = console.log;
+      datasource.prompt = generatePrompt({
+        serviceName: 'cloudant-service',
+      });
+      lbBM.ds.selectBluemixDatasource(datasource, globalize);
     });
-    lbBM.ds.selectBluemixDatasource(datasource, globalize);
-  });
+  }
 
   it('should configure new service provision', function(done) {
     datasource.async = function() {
@@ -106,15 +109,17 @@ describe('lib/datasource', function() {
     lbBM.ds.promptServiceName(datasource, globalize);
   });
 
-  it('should get service plans', function(done) {
-    datasource.async = function() {
-      return function() {
-        assert('cloudantNoSQLDB' in datasource.dataServices);
-        done();
+  if (Object.keys(cfConfig).length) {
+    it('should get service plans', function(done) {
+      datasource.async = function() {
+        return function() {
+          assert('cloudantNoSQLDB' in datasource.dataServices);
+          done();
+        };
       };
-    };
-    lbBM.ds.getServicePlans(datasource);
-  });
+      lbBM.ds.getServicePlans(datasource);
+    });
+  }
 
   it('should update datasources-config.json', function(done) {
     datasource.async = function() {
