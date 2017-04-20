@@ -34,7 +34,7 @@ if (Object.keys(cfConfig).length) {
 
     it('should get apps', function(done) {
       cf.getApps(null, accessToken, function(err, apps) {
-        assert(!err);
+        if (err) return done(err);
         var appFound = false;
         apps.forEach(function(app) {
           if (cfTestConfig.app.name === app.entity.name) {
@@ -48,7 +48,7 @@ if (Object.keys(cfConfig).length) {
 
     it('should get service instances', function(done) {
       cf.getServiceInstances(null, accessToken, function(err, services) {
-        assert(!err);
+        if (err) return done(err);
         var state = getServiceState(services);
         assert(state.supportedServiceFound);
         assert(state.unsupportedServiceFound);
@@ -59,7 +59,7 @@ if (Object.keys(cfConfig).length) {
 
     it('should get only data service instances', function(done) {
       cf.getDataServiceInstances(null, accessToken, function(err, services) {
-        assert(!err);
+        if (err) return done(err);
         var state = getServiceState(services);
         assert(state.supportedServiceFound);
         assert(state.unsupportedServiceFound);
