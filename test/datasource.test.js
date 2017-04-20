@@ -79,7 +79,8 @@ describe('lib/datasource', function() {
   if (Object.keys(cfConfig).length) {
     it('should configure a Bluemix datasource selection', function(done) {
       datasource.async = function() {
-        return function() {
+        return function(err) {
+          if (err) return done(err);
           assert('cloudant-service' === datasource.name);
           assert('cloudant' === datasource.connector);
           assert('serviceGUID' in datasource);
@@ -96,7 +97,8 @@ describe('lib/datasource', function() {
 
   it('should configure new service provision', function(done) {
     datasource.async = function() {
-      return function() {
+      return function(err) {
+        if (err) return done(err);
         assert('cloudanto' === datasource.serviceName);
         assert('cloudantNoSQLDB' === datasource.serviceType);
         done();
@@ -112,7 +114,9 @@ describe('lib/datasource', function() {
   if (Object.keys(cfConfig).length) {
     it('should get service plans', function(done) {
       datasource.async = function() {
-        return function() {
+        return function(err) {
+          if (err) return done(err);
+          assert(datasource.dataServices);
           assert('cloudantNoSQLDB' in datasource.dataServices);
           done();
         };
@@ -124,7 +128,7 @@ describe('lib/datasource', function() {
   it('should update datasources-config.json', function(done) {
     datasource.async = function() {
       return function(err) {
-        assert(!err);
+        if (err) return done(err);
         var dsConfigContent = fs.readFileSync(destDatasourcesConfigFilePath, 'utf8');
         var datasourcesConfig = JSON.parse(dsConfigContent);
         assert('dsA' in datasourcesConfig.datasources);
