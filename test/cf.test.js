@@ -26,6 +26,8 @@ if (Object.keys(cfConfig).length) {
   describe('lib/cf', function() {
     it('should get CF config', function() {
       var cfConfig = cf.getCfConfig();
+      // Skip the test if ~/.cf/config.json does not exist
+      if (Object.keys(cfConfig).length === 0) return;
       assert('organization' in cfConfig);
       assert('space' in cfConfig);
       assert('apiURL' in cfConfig);

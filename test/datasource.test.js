@@ -59,6 +59,12 @@ var datasource = {
   {name: 'ElasticSearch (provided by community)', value: 'es'}],
 };
 
+// Populate datasource with config
+var config = lbBM.cf.getCfConfig();
+for (var c in config) {
+  datasource[c] = config[c];
+}
+
 var globalize = {
   f: console.log,
 };
