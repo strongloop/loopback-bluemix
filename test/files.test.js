@@ -44,10 +44,10 @@ describe('lib/files', function() {
   it('should generate Bluemix files', function() {
     var options = {
       destDir: sandboxDir,
-      bluemixCommand: 'bluemix',
+      enableBluemix: true,
+      enableManifest: true,
       enableDocker: true,
       enableToolchain: true,
-      cmdOptions: {},
     };
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
     BASIC_BLUEMIX_FILES.concat(DOCKER_FILES).concat(TOOLCHAIN_FILES)
@@ -60,9 +60,7 @@ describe('lib/files', function() {
   it('should generate only Docker files', function() {
     var options = {
       destDir: sandboxDir,
-      cmdOptions: {
-        docker: true,
-      },
+      enableDocker: true,
     };
 
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
@@ -80,10 +78,8 @@ describe('lib/files', function() {
   it('should ommit Docker files', function() {
     var options = {
       destDir: sandboxDir,
-      bluemixCommand: 'bluemix',
       enableDocker: false,
       enableToolchain: true,
-      cmdOptions: {},
     };
 
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
@@ -96,9 +92,7 @@ describe('lib/files', function() {
   it('should generate only toolchain files', function() {
     var options = {
       destDir: sandboxDir,
-      cmdOptions: {
-        toolchain: true,
-      },
+      enableToolchain: true,
     };
 
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
@@ -116,10 +110,8 @@ describe('lib/files', function() {
   it('should ommit toolchain files', function() {
     var options = {
       destDir: sandboxDir,
-      bluemixCommand: 'bluemix',
       enableDocker: true,
       enableToolchain: false,
-      cmdOptions: {},
     };
 
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
