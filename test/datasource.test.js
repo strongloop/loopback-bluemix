@@ -81,7 +81,7 @@ describe('lib/datasource', function() {
       datasource.async = function() {
         return function(err) {
           if (err) return done(err);
-          assert('cloudant-service' === datasource.name);
+          assert('cloudantFixture' === datasource.name);
           assert('cloudant' === datasource.connector);
           assert('serviceGUID' in datasource);
           done();
@@ -89,7 +89,7 @@ describe('lib/datasource', function() {
       };
       datasource.log = console.log;
       datasource.prompt = generatePrompt({
-        serviceName: 'cloudant-service',
+        serviceName: 'cloudantFixture',
       });
       lbBM.ds.selectBluemixDatasource(datasource, globalize);
     });

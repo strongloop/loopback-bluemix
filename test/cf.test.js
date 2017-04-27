@@ -37,7 +37,7 @@ if (Object.keys(cfConfig).length) {
         if (err) return done(err);
         var appFound = false;
         apps.forEach(function(app) {
-          if (cfTestConfig.app.name === app.entity.name) {
+          if (cfTestConfig.app === app.entity.name) {
             appFound = true;
           }
         });
@@ -82,14 +82,11 @@ if (Object.keys(cfConfig).length) {
       var nondataService = cfTestConfig.service.nondata;
       var serviceName = service.instance.entity.name;
       var serviceGuid = service.instance.metadata.guid;
-      if (supportedService.name === serviceName &&
-          supportedService.guid === serviceGuid) {
+      if (supportedService === serviceName) {
         state.supportedServiceFound = true;
-      } else if (unsupportedService.name === serviceName &&
-                unsupportedService.guid === serviceGuid) {
+      } else if (unsupportedService === serviceName) {
         state.unsupportedServiceFound = true;
-      } else if (nondataService.name === serviceName &&
-                nondataService.guid === serviceGuid) {
+      } else if (nondataService === serviceName) {
         state.nondataServiceFound = true;
       }
     });
