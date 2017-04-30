@@ -7,6 +7,8 @@
     "node": ">=4"
   },
   "scripts": {
+    "create-bm-fixtures": "node ./test/fixtures/bluemix/create-bm-fixtures",
+    "delete-bm-fixtures": "node ./test/fixtures/bluemix/delete-bm-fixtures",
     "posttest": "npm run lint",
     "lint": "eslint .",
     "test": "mocha"
@@ -30,10 +32,12 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
+    "cloudfoundry-cli": "^0.8.0",
     "eslint": "^3.18.0",
     "eslint-config-loopback": "^8.0.0",
-    "fs-extra": "^2.1.2",
+    "fs-extra": "^3.0.0",
     "loopback-workspace": "^3.40.1",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "uuid": "^3.0.1"
   }
 }
