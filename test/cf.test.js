@@ -26,10 +26,28 @@ if (Object.keys(cfConfig).length) {
   describe('lib/cf', function() {
     it('should get CF config', function() {
       var cfConfig = cf.getCfConfig();
+      // Skip the test if ~/.cf/config.json does not exist
+      if (Object.keys(cfConfig).length === 0) return;
       assert('organization' in cfConfig);
       assert('space' in cfConfig);
       assert('apiURL' in cfConfig);
       assert('accessToken' in cfConfig);
+    });
+
+    it('should login with user/password', function(done) {
+      if (!process.env.BLUEMIX_EMAIL || !process.env.BLUEMIX_PASSWORD) {
+        console.error('    x Missing BLUEMIX_EMAIL and BLUEMIX_PASSWORD env vars');
+        return this.skip(); // Skip the test
+      }
+      cf.login(process.env.BLUEMIX_EMAIL, process.env.BLUEMIX_PASSWORD, done);
+    });
+
+    it('should login with SSO passcode', function(done) {
+      if (!process.env.BLUEMIX_PASSCODE) {
+        console.error('    x Missing BLUEMIX_PASSCODE env var');
+        return this.skip();
+      }
+      cf.login(null, process.env.BLUEMIX_PASSCODE, {sso: true}, done);
     });
 
     it('should get apps', function(done) {
