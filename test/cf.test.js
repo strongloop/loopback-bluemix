@@ -34,6 +34,20 @@ if (Object.keys(cfConfig).length) {
       assert('accessToken' in cfConfig);
     });
 
+    it('should login with user/password', function(done) {
+      if (!process.env.BLUEMIX_EMAIL || !process.env.BLUEMIX_PASSWORD) {
+        return done('Missing BLUEMIX_EMAIL and BLUEMIX_PASSWORD env vars');
+      }
+      cf.login(process.env.BLUEMIX_EMAIL, process.env.BLUEMIX_PASSWORD, done);
+    });
+
+    it('should login with SSO passcode', function(done) {
+      if (!process.env.BLUEMIX_PASSCODE) {
+        return done('Missing BLUEMIX_PASSCODE env var');
+      }
+      cf.login(null, process.env.BLUEMIX_PASSCODE, {sso: true}, done);
+    });
+
     it('should get apps', function(done) {
       cf.getApps(null, accessToken, function(err, apps) {
         if (err) return done(err);
