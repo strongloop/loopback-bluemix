@@ -12,7 +12,7 @@ var supportedVcapServices = datasourcesConfig.supportedServices;
 var supportedVcapServiceNames = [];
 Object.keys(supportedVcapServices).forEach(function(key) {
   var value = supportedVcapServices[key];
-  supportedVcapServiceNames.push(value);
+  supportedVcapServiceNames.push(value.label);
 });
 
 var dataSources = {};

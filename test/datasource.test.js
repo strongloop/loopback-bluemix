@@ -11,6 +11,7 @@
 var fs = require('fs-extra');
 var path = require('path');
 var assert = require('assert');
+var jsonUpdater = require('jsonfile-updater');
 var lbBM = require(path.resolve(__dirname, '..'));
 var cfConfig = lbBM.cf.getCfConfig();
 var sandboxDir = path.resolve(__dirname, 'sandbox');
@@ -20,6 +21,11 @@ var srcDatasourcesConfigFilePath = path.resolve(bluemixTemplatesDir,
                                   'bluemix', 'datasources-config.json');
 var destDatasourcesConfigFilePath = path.resolve(sandboxDir, '.bluemix',
                                   'datasources-config.json');
+var srcBluemixDatasourcesFilePath = path.resolve(bluemixTemplatesDir,
+                                  'datasources.bluemix.js');
+var destBluemixDatasourcesFilePath = path.resolve(sandboxDir, 'server',
+                                  'datasources.bluemix.js');
+
 // mock datasource instance
 var datasource = {
   listOfAvailableConnectors: [{name: 'In-memory db (supported by StrongLoop)',
@@ -74,12 +80,32 @@ describe('lib/datasource', function() {
     fs.ensureDirSync(sandboxDir);
     fs.emptyDirSync(sandboxDir);
     fs.copySync(srcDatasourcesConfigFilePath, destDatasourcesConfigFilePath);
+    fs.copySync(srcBluemixDatasourcesFilePath, destBluemixDatasourcesFilePath);
     process.chdir(sandboxDir);
   });
 
   afterEach(function() {
     fs.emptyDirSync(sandboxDir);
     fs.removeSync(sandboxDir);
+  });
+
+  it('should populate services from VCAP_SERVICES', function(done) {
+    jsonUpdater(destDatasourcesConfigFilePath)
+    .add('datasources.loopback-cloudant', {
+      'name': 'loopback-cloudant',
+      'connector': 'cloudant',
+      'database': 'mydb',
+      'modelIndex': 'id',
+    }, function(err) {
+      assert(!err);
+      process.env.VCAP_SERVICES = '{"cloudantNoSQLDB":[{"credentials":{"username":"000000000000","password":"000000000000","host":"000000000000-bluemix.cloudant.com","port":443,"url":"http://000000000000"},"syslog_drain_url":null,"label":"cloudantNoSQLDB","provider":null,"plan":"Lite","name":"loopback-cloudant","tags":["data_management","ibm_created","lite","ibm_dedicated_public"]}]}';
+      var datasourcesBluemixPath = path.join(sandboxDir, 'server',
+                                  'datasources.bluemix.js');
+      var dataSources = require(datasourcesBluemixPath);
+      assert('loopback-cloudant' in dataSources);
+      assert(dataSources['loopback-cloudant'].connector === 'cloudant');
+      done();
+    });
   });
 
   if (Object.keys(cfConfig).length) {
