@@ -1,3 +1,25 @@
+2017-05-23, Version 1.2.0
+=========================
+
+ * Fix VCAP_SERVICES service discovery bug (Hage Yaapa)
+
+
+2017-05-03, Version 2.0.0
+=========================
+
+ * Make login tests conditional (Raymond Feng)
+
+ * add tests (Hage Yaapa)
+
+ * Simplify bluemix code generation (Raymond Feng)
+
+ * Improve login/accessToken passing (Raymond Feng)
+
+ * Add scripts for adding and deleting Bluemix fixtures (Hage Yaapa)
+
+ * scripts for adding and deleting Bluemix fixtures (Hage Yaapa)
+
+
 2017-04-20, Version 1.1.1
 =========================
 
