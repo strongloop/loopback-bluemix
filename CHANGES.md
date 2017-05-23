@@ -1,6 +1,6 @@
 
 
-2017-05-23, Version 1.2.0
+2017-05-23, Version 2.1.0
 =========================
 
  * Fix VCAP_SERVICES service discovery bug (Hage Yaapa)
