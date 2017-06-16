@@ -21,7 +21,7 @@ if (fs.existsSync(provisionedFilePath)) {
     appFixture: false,
     cloudantFixture: false,
     rabbitFixture: false,
-    twitterFixture: false
+    nonDataFixture: false
   }
 
   var appName = uuid();
@@ -56,9 +56,9 @@ if (fs.existsSync(provisionedFilePath)) {
       type: 'compose-for-rabbitmq',
       plan: 'Standard'
     },
-    twitterFixture: {
-      type: 'twitterinsights',
-      plan: 'Free'
+    nonDataFixture: {
+      type: 'tone_analyzer',
+      plan: 'lite'
     }
   }
 

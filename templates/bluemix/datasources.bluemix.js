@@ -24,30 +24,53 @@ Object.keys(vcapServices).forEach(function(serviceType) {
       if (service.name in configuredDatasources) {
         var configuredDatasource = configuredDatasources[service.name];
         var credentials = service.credentials;
-        dataSources[service.name] = {
-          name: service.name,
-          connector: configuredDatasource.connector,
-          url: credentials.uri || credentials.url,
-          host: credentials.host,
-          port: credentials.port,
-          username: credentials.username,
-          password: credentials.password,
-        };
-        var dataSource = dataSources[service.name];
 
-        if ('database' in configuredDatasource) {
-          dataSource.database = configuredDatasource.database;
-        }
-        if ('db' in configuredDatasource) {
-          dataSource.db = configuredDatasource.db;
-        }
+        if (service.label === 'Object-Storage') {
+          // Connectors that are implemented by loopback-component-storage
+          var loopbackComponentStorageConnectors = ['ibm-object-storage'];
 
-        if (credentials.db_type === 'redis') {
-          dataSource.url += '/' + configuredDatasource.database;
-        } else if (credentials.db_type === 'mysql'  ||
-                  credentials.db_type === 'postgresql') {
-          dataSource.url = dataSource.url.replace('compose',
-                           configuredDatasource.database);
+          dataSources[service.name] = {
+            name: service.name,
+            provider: 'openstack',
+            useServiceCatalog: true,
+            useInternal: false,
+            keystoneAuthVersion: 'v3',
+            authUrl: credentials.auth_url,
+            tenantId: credentials.projectId,
+            domainId: credentials.domainId,
+            username: credentials.username,
+            password: credentials.password,
+            region: credentials.region,
+            connector: loopbackComponentStorageConnectors
+                        .indexOf(configuredDatasource.connector) > -1 ?
+                        'loopback-component-storage' : configuredDatasource.connector,
+          };
+        } else {
+          dataSources[service.name] = {
+            name: service.name,
+            connector: configuredDatasource.connector,
+            url: credentials.uri || credentials.url,
+            host: credentials.host,
+            port: credentials.port,
+            username: credentials.username,
+            password: credentials.password,
+          };
+          var dataSource = dataSources[service.name];
+
+          if ('database' in configuredDatasource) {
+            dataSource.database = configuredDatasource.database;
+          }
+          if ('db' in configuredDatasource) {
+            dataSource.db = configuredDatasource.db;
+          }
+
+          if (credentials.db_type === 'redis') {
+            dataSource.url += '/' + configuredDatasource.database;
+          } else if (credentials.db_type === 'mysql'  ||
+                    credentials.db_type === 'postgresql') {
+            dataSource.url = dataSource.url.replace('compose',
+                             configuredDatasource.database);
+          }
         }
       }
     });

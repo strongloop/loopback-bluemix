@@ -12,7 +12,7 @@ var fixtures = {
   service: {
     supported: 'cloudantFixture',
     unsupported: 'rabbitFixture',
-    nondata: 'twitterFixture',
+    nondata: 'nonDataFixture',
   },
 };
 

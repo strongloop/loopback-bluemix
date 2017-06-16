@@ -26,7 +26,7 @@ if (fs.existsSync(provisionedFilePath)) {
   var fixtureServices = [
     'cloudantFixture',
     'rabbitFixture',
-    'twitterFixture'
+    'nonDataFixture'
   ];
 
   fixtureServices.forEach(function(serviceName) {

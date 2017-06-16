@@ -8,6 +8,20 @@ Utilities for generating generate Bluemix artefacts
 npm install loopback-bluemix
 ```
 
+## Testing
+
+Before testing:
+
+```
+npm run create-bm-fixtures
+```
+
+To delete the fixtures:
+
+```
+npm run delete-bm-fixtures
+```
+
 ## API
 
 `loopback-bluemix` exports the following properties and methods.

@@ -75,12 +75,12 @@ if (Object.keys(cfConfig).length) {
       });
     });
 
-    it('should get only data service instances', function(done) {
+    it('should get only supported data service instances', function(done) {
       cf.getDataServiceInstances(null, accessToken, function(err, services) {
         if (err) return done(err);
         var state = getServiceState(services);
         assert(state.supportedServiceFound);
-        assert(state.unsupportedServiceFound);
+        assert(!state.unsupportedServiceFound);
         assert(!state.nondataServiceFound);
         done();
       });

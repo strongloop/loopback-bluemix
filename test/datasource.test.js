@@ -131,7 +131,7 @@ describe('lib/datasource', function() {
     datasource.async = function() {
       return function(err) {
         if (err) return done(err);
-        assert('cloudanto' === datasource.serviceName);
+        assert('cloudanto' === datasource.name);
         assert('cloudantNoSQLDB' === datasource.serviceType);
         done();
       };
