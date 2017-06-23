@@ -1,6 +1,19 @@
+2017-06-23, Version 2.2.0
+=========================
+
+ * Support IBM Object Storage (Hage Yaapa)
+
+ * Provision Bluemix data services (Hage Yaapa)
+
+ * Fix version number (Tetsuo Seto)
 
 
 2017-05-23, Version 2.1.0
+=========================
+
+
+
+2017-05-23, Version 1.2.0
 =========================
 
  * Fix VCAP_SERVICES service discovery bug (Hage Yaapa)
