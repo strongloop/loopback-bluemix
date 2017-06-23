@@ -51,7 +51,7 @@ var globalize = {
   f: console.log,
 };
 
-describe('lib/datasource', function() {
+describe('lib/provision', function() {
   beforeEach(function() {
     fs.ensureDirSync(sandboxDir);
     fs.emptyDirSync(sandboxDir);
@@ -65,62 +65,35 @@ describe('lib/datasource', function() {
     fs.removeSync(sandboxDir);
   });
 
-  it('should populate services from VCAP_SERVICES', function(done) {
-    jsonUpdater(destDatasourcesConfigFilePath)
-    .add('datasources.loopback-cloudant', {
-      'name': 'loopback-cloudant',
-      'connector': 'cloudant',
-      'database': 'mydb',
-      'modelIndex': 'id',
-    }, function(err) {
-      assert(!err);
-      process.env.VCAP_SERVICES = '{"cloudantNoSQLDB":[{"credentials":{"username":"000000000000","password":"000000000000","host":"000000000000-bluemix.cloudant.com","port":443,"url":"http://000000000000"},"syslog_drain_url":null,"label":"cloudantNoSQLDB","provider":null,"plan":"Lite","name":"loopback-cloudant","tags":["data_management","ibm_created","lite","ibm_dedicated_public"]}]}';
-      var datasourcesBluemixPath = path.join(sandboxDir, 'server',
-                                  'datasources.bluemix.js');
-      var dataSources = require(datasourcesBluemixPath);
-      assert('loopback-cloudant' in dataSources);
-      assert(dataSources['loopback-cloudant'].connector === 'cloudant');
-      done();
-    });
-  });
-
-  if (Object.keys(cfConfig).length) {
-    it('should configure a Bluemix datasource selection', function(done) {
-      datasource.async = function() {
-        return function(err) {
-          if (err) return done(err);
-          assert('cloudantFixture' === datasource.name);
-          assert('cloudant' === datasource.connector);
-          assert('serviceGUID' in datasource);
-          done();
-        };
-      };
-      datasource.log = console.log;
-      datasource.prompt = generatePrompt({
-        serviceName: 'cloudantFixture',
-      });
-      lbBM.ds.selectBluemixDatasource(datasource, globalize);
-    });
-  }
-
-  it('should update datasources-config.json', function(done) {
+  it('should configure new service provision', function(done) {
     datasource.async = function() {
       return function(err) {
         if (err) return done(err);
-        var dsConfigContent = fs.readFileSync(destDatasourcesConfigFilePath, 'utf8');
-        var datasourcesConfig = JSON.parse(dsConfigContent);
-        assert('dsA' in datasourcesConfig.datasources);
-        assert('dsA' === datasourcesConfig.datasources['dsA'].name);
-        assert('cA' === datasourcesConfig.datasources['dsA'].connector);
+        assert('cloudanto' === datasource.name);
+        assert('cloudantNoSQLDB' === datasource.serviceType);
         done();
       };
     };
-    var options = {
-      name: 'dsA',
-      connector: 'cA',
-    };
-    lbBM.ds.addDatasource(datasource, options);
+    datasource.prompt = generatePrompt({
+      serviceName: 'cloudanto',
+      serviceType: 'cloudantNoSQLDB',
+    });
+    lbBM.provision.promptServiceName(datasource, globalize);
   });
+
+  if (Object.keys(cfConfig).length) {
+    it('should get service plans', function(done) {
+      datasource.async = function() {
+        return function(err) {
+          if (err) return done(err);
+          assert(datasource.dataServices);
+          assert('cloudantNoSQLDB' in datasource.dataServices);
+          done();
+        };
+      };
+      lbBM.provision.getServicePlans(datasource);
+    });
+  }
 });
 
 function generatePrompt(answers) {
