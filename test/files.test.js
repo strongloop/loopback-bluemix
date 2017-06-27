@@ -14,7 +14,6 @@ var sandboxDir = path.resolve(__dirname, 'sandbox');
 
 var BASIC_BLUEMIX_FILES = [
   '.bluemix/datasources-config.json',
-  'server/datasources.bluemix.js',
   '.cfignore',
   'manifest.yml',
 ];
@@ -41,7 +40,20 @@ describe('lib/files', function() {
     fs.removeSync(sandboxDir);
   });
 
-  it('should generate Bluemix files', function() {
+  it('should generate datasources.bluemix.js', function() {
+    var options = {
+      destDir: sandboxDir,
+      enableBluemix: false,
+      enableManifest: false,
+      enableDocker: false,
+      enableToolchain: false,
+    };
+    lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
+    var filePath = sandboxDir + '/server/datasources.bluemix.js';
+    assert(fs.existsSync(filePath));
+  });
+
+  it('should generate basic Bluemix files', function() {
     var options = {
       destDir: sandboxDir,
       enableBluemix: true,
