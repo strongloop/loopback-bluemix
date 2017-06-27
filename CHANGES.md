@@ -1,3 +1,11 @@
+2017-06-27, Version 2.3.0
+=========================
+
+ * Fix repo description (Hage Yaapa)
+
+ * Separate command for service provisioning (Hage Yaapa)
+
+
 2017-06-23, Version 2.2.0
 =========================
 
