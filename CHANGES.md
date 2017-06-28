@@ -1,3 +1,9 @@
+2017-06-28, Version 2.3.1
+=========================
+
+ * Fixed missing datasources.bluemix.js (Hage Yaapa)
+
+
 2017-06-27, Version 2.3.0
 =========================
 
