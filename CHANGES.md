@@ -1,3 +1,9 @@
+2017-06-28, Version 2.3.2
+=========================
+
+ * Consistent use of serviceGuid (Hage Yaapa)
+
+
 2017-06-28, Version 2.3.1
 =========================
 
