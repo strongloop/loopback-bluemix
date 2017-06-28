@@ -91,7 +91,7 @@ describe('lib/datasource', function() {
           if (err) return done(err);
           assert('cloudantFixture' === datasource.name);
           assert('cloudant' === datasource.connector);
-          assert('serviceGUID' in datasource);
+          assert('serviceGuid' in datasource);
           done();
         };
       };
