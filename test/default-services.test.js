@@ -46,6 +46,28 @@ describe('lib/default-services', function() {
     });
   });
 
+  it('should add autoscaling only once', function(done) {
+    var options = {destDir: sandboxDir, enableAutoScaling: true};
+    lbBM.addDefaultServices(options, function(err) {
+      assert(!err);
+      var options = {destDir: sandboxDir, enableAutoScaling: true};
+      lbBM.addDefaultServices(options, function(err) {
+        assert(!err);
+        var autoscalingServerfileContent = fs.readFileSync(path.join(
+                                          fixturesDir, 'server.autoscaling.js'), 'utf-8');
+        var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+        var firstIndex = serverfileContent
+                        .indexOf("require('bluemix-autoscaling-agent')");
+        var lastIndex = serverfileContent
+                        .lastIndexOf("require('bluemix-autoscaling-agent')");
+        assert.equal(firstIndex, lastIndex);
+        var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+        assert('bluemix-autoscaling-agent' in pkg.dependencies);
+        done();
+      });
+    });
+  });
+
   it('should add appmetrics only', function(done) {
     var options = {destDir: sandboxDir, enableAppMetrics: true};
     lbBM.addDefaultServices(options, function(err) {
@@ -57,6 +79,26 @@ describe('lib/default-services', function() {
       var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
       assert('appmetrics-dash' in pkg.dependencies);
       done();
+    });
+  });
+
+  it('should add appmetrics only once', function(done) {
+    var options = {destDir: sandboxDir, enableAppMetrics: true};
+    lbBM.addDefaultServices(options, function(err) {
+      assert(!err);
+      var options = {destDir: sandboxDir, enableAppMetrics: true};
+      lbBM.addDefaultServices(options, function(err) {
+        assert(!err);
+        var appmetricsServerfileContent = fs.readFileSync(path.join(
+                                          fixturesDir, 'server.appmetrics.js'), 'utf-8');
+        var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+        var firstIndex = serverfileContent.indexOf("require('appmetrics-dash')");
+        var lastIndex = serverfileContent.lastIndexOf("require('appmetrics-dash')");
+        assert.equal(firstIndex, lastIndex);
+        var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+        assert('appmetrics-dash' in pkg.dependencies);
+        done();
+      });
     });
   });
 
