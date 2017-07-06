@@ -1,10 +1,9 @@
-applications:
-- path: .
-  memory: <%= appMemory %>
-  instances: <%= appInstances %>
-  domain: <%= appDomain %>
-  name: <%= appName %>
-  host: <%= appHost %>
-  disk_quota: <%= appDiskQuota %>
+path: .
+memory: <%= appMemory %>
+instances: <%= appInstances %>
+domain: <%= appDomain %>
+name: <%= appName %>
+host: <%= appHost %>
+disk_quota: <%= appDiskQuota %>
 env:
   NODE_ENV: bluemix
