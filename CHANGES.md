@@ -1,4 +1,14 @@
-2017-06-28, Version 2.3.3
+2017-07-15, Version 3.0.0
+=========================
+
+ * Add command-line spinners (Hage Yaapa)
+
+ * Add default services once (Hage Yaapa)
+
+ * Single app in manifest.xml (Hage Yaapa)
+
+
+2017-06-29, Version 2.3.3
 =========================
 
  * Better algorithm for existing service discovery (Hage Yaapa)
