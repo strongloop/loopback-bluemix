@@ -13,7 +13,6 @@ var lbBM = require(path.resolve(__dirname, '..'));
 var sandboxDir = path.resolve(__dirname, 'sandbox');
 
 var BASIC_BLUEMIX_FILES = [
-  '.bluemix/datasources-config.json',
   '.cfignore',
   'manifest.yml',
 ];
@@ -50,6 +49,19 @@ describe('lib/files', function() {
     };
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
     var filePath = sandboxDir + '/server/datasources.bluemix.js';
+    assert(fs.existsSync(filePath));
+  });
+
+  it('should generate datasources-config.json', function() {
+    var options = {
+      destDir: sandboxDir,
+      enableBluemix: false,
+      enableManifest: false,
+      enableDocker: false,
+      enableToolchain: false,
+    };
+    lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
+    var filePath = sandboxDir + '/.bluemix/datasources-config.json';
     assert(fs.existsSync(filePath));
   });
 
