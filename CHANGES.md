@@ -1,3 +1,9 @@
+2017-07-17, Version 3.1.0
+=========================
+
+ * Generate datasources-config.json by default (Hage Yaapa)
+
+
 2017-07-15, Version 3.0.0
 =========================
 
