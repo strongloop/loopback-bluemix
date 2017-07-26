@@ -121,6 +121,34 @@ describe('lib/datasource', function() {
     };
     lbBM.ds.addDatasource(datasource, options);
   });
+
+  it('should fail elegantly on selectBluemixDatasource error', function(done) {
+    datasource.async = function() {
+      return function(err) {
+        assert.equal(true, datasource.abort);
+        return done(err);
+      };
+    };
+    datasource.log = console.log;
+    datasource.prompt = generatePrompt({
+      serviceName: 'no-service',
+    });
+    lbBM.ds.selectBluemixDatasource(datasource, globalize);
+  });
+
+  it('should fail elegantly on bindServiceToApp error', function(done) {
+    datasource.async = function() {
+      return function(err) {
+        assert.equal(true, datasource.abort);
+        return done(err);
+      };
+    };
+    datasource.log = console.log;
+    datasource.prompt = generatePrompt({
+      serviceName: 'no-service',
+    });
+    lbBM.ds.bindServiceToApp(datasource, globalize);
+  });
 });
 
 function generatePrompt(answers) {
