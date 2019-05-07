@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/strongloop/loopback-bluemix.git"
   },
-  "author": "",
+  "author": "IBM Corp.",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/strongloop/loopback-bluemix/issues"
