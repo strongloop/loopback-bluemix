@@ -6,26 +6,26 @@
 /* global describe, beforeEach, it */
 'use strict';
 
-var fs = require('fs-extra');
-var path = require('path');
-var assert = require('assert');
-var jsonUpdater = require('jsonfile-updater');
-var lbBM = require(path.resolve(__dirname, '..'));
-var cfConfig = lbBM.cf.getCfConfig();
-var sandboxDir = path.resolve(__dirname, 'sandbox');
-var fixturesDir = path.resolve(__dirname, 'fixtures');
-var bluemixTemplatesDir = path.resolve(__dirname, '..', 'templates', 'bluemix');
-var srcDatasourcesConfigFilePath = path.resolve(bluemixTemplatesDir,
-                                  'bluemix', 'datasources-config.json');
-var destDatasourcesConfigFilePath = path.resolve(sandboxDir, '.bluemix',
-                                  'datasources-config.json');
-var srcBluemixDatasourcesFilePath = path.resolve(bluemixTemplatesDir,
-                                  'datasources.bluemix.js');
-var destBluemixDatasourcesFilePath = path.resolve(sandboxDir, 'server',
-                                  'datasources.bluemix.js');
+const fs = require('fs-extra');
+const path = require('path');
+const assert = require('assert');
+const jsonUpdater = require('jsonfile-updater');
+const lbBM = require(path.resolve(__dirname, '..'));
+const cfConfig = lbBM.cf.getCfConfig();
+const sandboxDir = path.resolve(__dirname, 'sandbox');
+const fixturesDir = path.resolve(__dirname, 'fixtures');
+const bluemixTemplatesDir = path.resolve(__dirname, '..', 'templates', 'bluemix');
+const srcDatasourcesConfigFilePath = path.resolve(bluemixTemplatesDir,
+  'bluemix', 'datasources-config.json');
+const destDatasourcesConfigFilePath = path.resolve(sandboxDir, '.bluemix',
+  'datasources-config.json');
+const srcBluemixDatasourcesFilePath = path.resolve(bluemixTemplatesDir,
+  'datasources.bluemix.js');
+const destBluemixDatasourcesFilePath = path.resolve(sandboxDir, 'server',
+  'datasources.bluemix.js');
 
 // mock datasource instance
-var datasource = {
+const datasource = {
   listOfAvailableConnectors: [{name: 'In-memory db (supported by StrongLoop)',
     value: 'memory'},
   {name: 'In-memory key-value connector (supported by StrongLoop)',
@@ -42,12 +42,12 @@ var datasource = {
 };
 
 // Populate datasource with config
-var config = lbBM.cf.getCfConfig();
-for (var c in config) {
+const config = lbBM.cf.getCfConfig();
+for (const c in config) {
   datasource[c] = config[c];
 }
 
-var globalize = {
+const globalize = {
   f: console.log,
 };
 

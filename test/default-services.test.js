@@ -6,18 +6,18 @@
 /* global describe, beforeEach, it */
 'use strict';
 
-var fs = require('fs-extra');
-var path = require('path');
-var assert = require('assert');
-var lbBM = require(path.resolve(__dirname, '..'));
-var sandboxDir = path.resolve(__dirname, 'sandbox');
-var fixturesDir = path.resolve(__dirname, 'fixtures');
-var srcPackagefilePath = path.resolve(__dirname, 'fixtures', 'package.json');
-var destPackagefilePath = path.join(sandboxDir, 'package.json');
-var srcSeverfilePath = path.resolve(__dirname, '..', 'node_modules', 'loopback-workspace',
-                      'templates', 'projects', 'empty-server', 'files',
-                      'server', 'server.js');
-var destSeverfilePath = path.join(sandboxDir, 'server', 'server.js');
+const fs = require('fs-extra');
+const path = require('path');
+const assert = require('assert');
+const lbBM = require(path.resolve(__dirname, '..'));
+const sandboxDir = path.resolve(__dirname, 'sandbox');
+const fixturesDir = path.resolve(__dirname, 'fixtures');
+const srcPackagefilePath = path.resolve(__dirname, 'fixtures', 'package.json');
+const destPackagefilePath = path.join(sandboxDir, 'package.json');
+const srcSeverfilePath = path.resolve(__dirname, '..', 'node_modules',
+  'loopback-workspace', 'templates', 'projects', 'empty-server', 'files',
+  'server', 'server.js');
+const destSeverfilePath = path.join(sandboxDir, 'server', 'server.js');
 
 describe('lib/default-services', function() {
   beforeEach(function() {
@@ -33,35 +33,37 @@ describe('lib/default-services', function() {
   });
 
   it('should add autoscaling only', function(done) {
-    var options = {destDir: sandboxDir, enableAutoScaling: true};
+    const options = {destDir: sandboxDir, enableAutoScaling: true};
     lbBM.addDefaultServices(options, function(err) {
       assert(!err);
-      var autoscalingServerfileContent = fs.readFileSync(path.join(
-                                        fixturesDir, 'server.autoscaling.js'), 'utf-8');
-      var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+      const autoscalingServerfileContent = fs.readFileSync(path.join(
+        fixturesDir, 'server.autoscaling.js'
+      ), 'utf-8');
+      const serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
       assert(autoscalingServerfileContent === serverfileContent);
-      var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+      const pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
       assert('bluemix-autoscaling-agent' in pkg.dependencies);
       done();
     });
   });
 
   it('should add autoscaling only once', function(done) {
-    var options = {destDir: sandboxDir, enableAutoScaling: true};
+    const options = {destDir: sandboxDir, enableAutoScaling: true};
     lbBM.addDefaultServices(options, function(err) {
       assert(!err);
-      var options = {destDir: sandboxDir, enableAutoScaling: true};
+      const options = {destDir: sandboxDir, enableAutoScaling: true};
       lbBM.addDefaultServices(options, function(err) {
         assert(!err);
-        var autoscalingServerfileContent = fs.readFileSync(path.join(
-                                          fixturesDir, 'server.autoscaling.js'), 'utf-8');
-        var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
-        var firstIndex = serverfileContent
-                        .indexOf("require('bluemix-autoscaling-agent')");
-        var lastIndex = serverfileContent
-                        .lastIndexOf("require('bluemix-autoscaling-agent')");
+        const autoscalingServerfileContent = fs.readFileSync(path.join(
+          fixturesDir, 'server.autoscaling.js'
+        ), 'utf-8');
+        const serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+        const firstIndex = serverfileContent
+          .indexOf("require('bluemix-autoscaling-agent')");
+        const lastIndex = serverfileContent
+          .lastIndexOf("require('bluemix-autoscaling-agent')");
         assert.equal(firstIndex, lastIndex);
-        var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+        const pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
         assert('bluemix-autoscaling-agent' in pkg.dependencies);
         done();
       });
@@ -69,33 +71,35 @@ describe('lib/default-services', function() {
   });
 
   it('should add appmetrics only', function(done) {
-    var options = {destDir: sandboxDir, enableAppMetrics: true};
+    const options = {destDir: sandboxDir, enableAppMetrics: true};
     lbBM.addDefaultServices(options, function(err) {
       assert(!err);
-      var appmetricsServerfileContent = fs.readFileSync(path.join(
-                                        fixturesDir, 'server.appmetrics.js'), 'utf-8');
-      var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+      const appmetricsServerfileContent = fs.readFileSync(path.join(
+        fixturesDir, 'server.appmetrics.js'
+      ), 'utf-8');
+      const serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
       assert(appmetricsServerfileContent === serverfileContent);
-      var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+      const pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
       assert('appmetrics-dash' in pkg.dependencies);
       done();
     });
   });
 
   it('should add appmetrics only once', function(done) {
-    var options = {destDir: sandboxDir, enableAppMetrics: true};
+    const options = {destDir: sandboxDir, enableAppMetrics: true};
     lbBM.addDefaultServices(options, function(err) {
       assert(!err);
-      var options = {destDir: sandboxDir, enableAppMetrics: true};
+      const options = {destDir: sandboxDir, enableAppMetrics: true};
       lbBM.addDefaultServices(options, function(err) {
         assert(!err);
-        var appmetricsServerfileContent = fs.readFileSync(path.join(
-                                          fixturesDir, 'server.appmetrics.js'), 'utf-8');
-        var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
-        var firstIndex = serverfileContent.indexOf("require('appmetrics-dash')");
-        var lastIndex = serverfileContent.lastIndexOf("require('appmetrics-dash')");
+        const appmetricsServerfileContent = fs.readFileSync(path.join(
+          fixturesDir, 'server.appmetrics.js'
+        ), 'utf-8');
+        const serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+        const firstIndex = serverfileContent.indexOf("require('appmetrics-dash')");
+        const lastIndex = serverfileContent.lastIndexOf("require('appmetrics-dash')");
         assert.equal(firstIndex, lastIndex);
-        var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+        const pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
         assert('appmetrics-dash' in pkg.dependencies);
         done();
       });
@@ -103,14 +107,19 @@ describe('lib/default-services', function() {
   });
 
   it('should add autoscaling and appmetrics', function(done) {
-    var options = {destDir: sandboxDir, enableAutoScaling: true, enableAppMetrics: true};
+    const options = {
+      destDir: sandboxDir,
+      enableAutoScaling: true,
+      enableAppMetrics: true,
+    };
     lbBM.addDefaultServices(options, function(err) {
       assert(!err);
-      var defaultsServerfileContent = fs.readFileSync(path.join(
-                                        fixturesDir, 'server.defaults.js'), 'utf-8');
-      var serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
+      const defaultsServerfileContent = fs.readFileSync(path.join(
+        fixturesDir, 'server.defaults.js'
+      ), 'utf-8');
+      const serverfileContent = fs.readFileSync(destSeverfilePath, 'utf-8');
       assert(defaultsServerfileContent === serverfileContent);
-      var pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
+      const pkg = JSON.parse(fs.readFileSync(destPackagefilePath));
       assert('bluemix-autoscaling-agent' in pkg.dependencies);
       assert('appmetrics-dash' in pkg.dependencies);
       done();

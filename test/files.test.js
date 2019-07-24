@@ -6,23 +6,23 @@
 /* global describe, beforeEach, it */
 'use strict';
 
-var fs = require('fs-extra');
-var path = require('path');
-var assert = require('assert');
-var lbBM = require(path.resolve(__dirname, '..'));
-var sandboxDir = path.resolve(__dirname, 'sandbox');
+const fs = require('fs-extra');
+const path = require('path');
+const assert = require('assert');
+const lbBM = require(path.resolve(__dirname, '..'));
+const sandboxDir = path.resolve(__dirname, 'sandbox');
 
-var BASIC_BLUEMIX_FILES = [
+const BASIC_BLUEMIX_FILES = [
   '.cfignore',
   'manifest.yml',
 ];
 
-var DOCKER_FILES = [
+const DOCKER_FILES = [
   '.dockerignore',
   'Dockerfile',
 ];
 
-var TOOLCHAIN_FILES = [
+const TOOLCHAIN_FILES = [
   '.bluemix/deploy.json',
   '.bluemix/pipeline.yml',
   '.bluemix/toolchain.yml',
@@ -40,7 +40,7 @@ describe('lib/files', function() {
   });
 
   it('should generate datasources.bluemix.js', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableBluemix: false,
       enableManifest: false,
@@ -48,12 +48,12 @@ describe('lib/files', function() {
       enableToolchain: false,
     };
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
-    var filePath = sandboxDir + '/server/datasources.bluemix.js';
+    const filePath = sandboxDir + '/server/datasources.bluemix.js';
     assert(fs.existsSync(filePath));
   });
 
   it('should generate datasources-config.json', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableBluemix: false,
       enableManifest: false,
@@ -61,12 +61,12 @@ describe('lib/files', function() {
       enableToolchain: false,
     };
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
-    var filePath = sandboxDir + '/.bluemix/datasources-config.json';
+    const filePath = sandboxDir + '/.bluemix/datasources-config.json';
     assert(fs.existsSync(filePath));
   });
 
   it('should generate basic Bluemix files', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableBluemix: true,
       enableManifest: true,
@@ -75,14 +75,14 @@ describe('lib/files', function() {
     };
     lbBM.generateBluemixFiles(options, fs.copySync, fs.copySync);
     BASIC_BLUEMIX_FILES.concat(DOCKER_FILES).concat(TOOLCHAIN_FILES)
-    .forEach(function(filePath) {
-      filePath = sandboxDir + '/' + filePath;
-      assert(fs.existsSync(filePath));
-    });
+      .forEach(function(filePath) {
+        filePath = sandboxDir + '/' + filePath;
+        assert(fs.existsSync(filePath));
+      });
   });
 
   it('should generate only Docker files', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableDocker: true,
     };
@@ -100,7 +100,7 @@ describe('lib/files', function() {
   });
 
   it('should ommit Docker files', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableDocker: false,
       enableToolchain: true,
@@ -114,7 +114,7 @@ describe('lib/files', function() {
   });
 
   it('should generate only toolchain files', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableToolchain: true,
     };
@@ -132,7 +132,7 @@ describe('lib/files', function() {
   });
 
   it('should ommit toolchain files', function() {
-    var options = {
+    const options = {
       destDir: sandboxDir,
       enableDocker: true,
       enableToolchain: false,

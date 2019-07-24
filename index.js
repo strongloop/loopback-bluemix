@@ -5,15 +5,15 @@
 
 'use strict';
 
-var path = require('path');
+const path = require('path');
 
-var cf = require(path.resolve(__dirname, 'lib', 'cf.js'));
-var addDefaultServices = require(path.resolve(__dirname, 'lib', 'default-services.js'));
-var generateBluemixFiles = require(path.resolve(__dirname, 'lib', 'files.js'));
-var ds = require(path.resolve(__dirname, 'lib', 'datasource.js'));
-var provision = require(path.resolve(__dirname, 'lib', 'provision.js'));
+const cf = require(path.resolve(__dirname, 'lib', 'cf.js'));
+const addDefaultServices = require(path.resolve(__dirname, 'lib', 'default-services.js'));
+const generateBluemixFiles = require(path.resolve(__dirname, 'lib', 'files.js'));
+const ds = require(path.resolve(__dirname, 'lib', 'datasource.js'));
+const provision = require(path.resolve(__dirname, 'lib', 'provision.js'));
 
-var loopbackBluemix = {
+const loopbackBluemix = {
   cf: cf,
   ds: ds,
   provision: provision,
