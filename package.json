@@ -4,7 +4,7 @@
   "description": "Utilities for generating Bluemix artifacts",
   "main": "index.js",
   "engines": {
-    "node": ">=4"
+    "node": ">=8.9"
   },
   "scripts": {
     "create-bm-fixtures": "node ./test/fixtures/bluemix/create-bm-fixtures",
