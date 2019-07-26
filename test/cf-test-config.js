@@ -6,9 +6,9 @@
 /* global describe, beforeEach, it */
 'use strict';
 
-var path = require('path');
-var fs = require('fs');
-var fixtures = {
+const path = require('path');
+const fs = require('fs');
+const fixtures = {
   service: {
     supported: 'cloudantFixture',
     unsupported: 'rabbitFixture',
@@ -16,15 +16,15 @@ var fixtures = {
   },
 };
 
-var provisionedFilePath = path.join(__dirname, 'fixtures', 'Bluemix', '.provisioned');
+const provisionedFilePath = path.join(__dirname, 'fixtures', 'Bluemix', '.provisioned');
 
 if (!fs.existsSync(provisionedFilePath)) {
-  var msg = 'Bluemix fixtures not created. ' +
+  const msg = 'Bluemix fixtures not created. ' +
             'Execute `npm run create-bm-fixtures` to create them.';
   console.log(msg);
   process.exit();
 } else {
-  var appName = fs.readFileSync(provisionedFilePath, 'utf8');
+  const appName = fs.readFileSync(provisionedFilePath, 'utf8');
   fixtures.app = appName;
 }
 

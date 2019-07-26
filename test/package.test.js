@@ -6,9 +6,9 @@
 /* global describe, beforeEach, it */
 'use strict';
 
-var path = require('path');
-var assert = require('assert');
-var lbBM = require(path.resolve(__dirname, '..'));
+const path = require('path');
+const assert = require('assert');
+const lbBM = require(path.resolve(__dirname, '..'));
 
 describe('loopback-bluemix', function() {
   it('should export cf', function() {

@@ -8,24 +8,24 @@
 
 // NOTE: tests written only for current relevant functions
 
-var assert = require('assert');
-var path = require('path');
-var cfTestConfig = require(path.resolve(__dirname, 'cf-test-config'));
-var bluemixTemplatesDir = path.resolve(__dirname, '..', 'templates', 'bluemix');
-var datasourcesConfigFilePath = path.resolve(bluemixTemplatesDir,
-                                  'bluemix', 'datasources-config.json');
-var datasourcesConfig = require(datasourcesConfigFilePath);
-var supportedServices = Object.keys(datasourcesConfig.supportedServices);
-var lbBM = require(path.resolve(__dirname, '..'));
-var cf = lbBM.cf;
-var cfConfig = cf.getCfConfig();
+const assert = require('assert');
+const path = require('path');
+const cfTestConfig = require(path.resolve(__dirname, 'cf-test-config'));
+const bluemixTemplatesDir = path.resolve(__dirname, '..', 'templates', 'bluemix');
+const datasourcesConfigFilePath = path.resolve(bluemixTemplatesDir,
+  'bluemix', 'datasources-config.json');
+const datasourcesConfig = require(datasourcesConfigFilePath);
+const supportedServices = Object.keys(datasourcesConfig.supportedServices);
+const lbBM = require(path.resolve(__dirname, '..'));
+const cf = lbBM.cf;
+const cfConfig = cf.getCfConfig();
 
 if (Object.keys(cfConfig).length) {
-  var accessToken = cfConfig.accessToken;
+  const accessToken = cfConfig.accessToken;
 
   describe('lib/cf', function() {
     it('should get CF config', function() {
-      var cfConfig = cf.getCfConfig();
+      const cfConfig = cf.getCfConfig();
       // Skip the test if ~/.cf/config.json does not exist
       if (Object.keys(cfConfig).length === 0) return;
       assert('organization' in cfConfig);
@@ -53,7 +53,7 @@ if (Object.keys(cfConfig).length) {
     it('should get apps', function(done) {
       cf.getApps(null, accessToken, function(err, apps) {
         if (err) return done(err);
-        var appFound = false;
+        let appFound = false;
         apps.forEach(function(app) {
           if (cfTestConfig.app === app.entity.name) {
             appFound = true;
@@ -67,7 +67,7 @@ if (Object.keys(cfConfig).length) {
     it('should get service instances', function(done) {
       cf.getServiceInstances(null, accessToken, function(err, services) {
         if (err) return done(err);
-        var state = getServiceState(services);
+        const state = getServiceState(services);
         assert(state.supportedServiceFound);
         assert(state.unsupportedServiceFound);
         assert(state.nondataServiceFound);
@@ -78,7 +78,7 @@ if (Object.keys(cfConfig).length) {
     it('should get only supported data service instances', function(done) {
       cf.getDataServiceInstances(null, accessToken, function(err, services) {
         if (err) return done(err);
-        var state = getServiceState(services);
+        const state = getServiceState(services);
         assert(state.supportedServiceFound);
         assert(!state.unsupportedServiceFound);
         assert(!state.nondataServiceFound);
@@ -88,18 +88,18 @@ if (Object.keys(cfConfig).length) {
   });
 
   function getServiceState(services) {
-    var state = {
+    const state = {
       supportedServiceFound: false,
       unsupportedServiceFound: false,
       nondataServiceFound: false,
     };
 
     services.forEach(function(service) {
-      var supportedService = cfTestConfig.service.supported;
-      var unsupportedService = cfTestConfig.service.unsupported;
-      var nondataService = cfTestConfig.service.nondata;
-      var serviceName = service.instance.entity.name;
-      var serviceGuid = service.instance.metadata.guid;
+      const supportedService = cfTestConfig.service.supported;
+      const unsupportedService = cfTestConfig.service.unsupported;
+      const nondataService = cfTestConfig.service.nondata;
+      const serviceName = service.instance.entity.name;
+      const serviceGuid = service.instance.metadata.guid;
       if (supportedService === serviceName) {
         state.supportedServiceFound = true;
       } else if (unsupportedService === serviceName) {
